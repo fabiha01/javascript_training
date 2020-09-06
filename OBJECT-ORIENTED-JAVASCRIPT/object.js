@@ -18,12 +18,37 @@ User.prototype.logout = function() {
     console.log(this.email, 'has logged out¬.')
 }
 
+// the 3 dots are turning the instance into an array
+// so that we can grab it in an array
+function Admin(...args) {
+    User.apply(this, args);
+    this.role = 'super admin';
+
+}
+
+Admin.prototype = Object.create(User.prototype);
+
+// this has only been applied to the admin prototype
+Admin.prototype.deleteUser = function(u) {
+    users = users.filter(user => {
+        // if the emails match then we retun false
+        // if we return false then we will filter the user out of the array
+        return user.email !== u.email;
+    })
+
+}
+
 // the intances do not have the prototype property
 const userOne = new User('ryu@ninjas.com', 'Ryu');
 const userTwo = new User('Yoshi@mariocorp.com', 'Yoshi');
+const admin = new Admin('fabiha@ninjas.co.uk', 'Fabiha');
 
-console.log(userOne);
-userTwo.login();
+let users = [userOne, userTwo, admin];
+
+console.log(admin);
+
+// console.log(userOne);
+// userTwo.login();
 
 
 
